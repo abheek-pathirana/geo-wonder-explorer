@@ -41,25 +41,21 @@ const WorldMap = () => {
 
   return (
     <div className="w-full h-screen relative">
-      {/* @ts-ignore */}
       <MapContainer
         center={mapCenter}
         zoom={2}
         className="w-full h-full"
         style={{ background: 'hsl(220, 25%, 8%)' }}
       >
-        {/* @ts-ignore */}
         <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
         {locations.map((location) => (
-          /* @ts-ignore */
           <Marker
             key={location.id}
             position={location.coordinates as LatLngExpression}
             icon={createCustomIcon(location.category)}
           >
-            {/* @ts-ignore */}
             <Popup>
-              <div className="bg-card rounded-lg overflow-hidden">
+              <div className="bg-card rounded-lg overflow-hidden" style={{ width: '400px' }}>
                 <div className="relative">
                   <div className="h-64 w-full">
                     <Model3DViewer modelType={location.modelType} />
