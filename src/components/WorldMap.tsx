@@ -1,25 +1,41 @@
+import { useEffect } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import { LatLngExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import MapMarkers from './MapMarkers';
+import LeafletIconFix from './LeafletIcon';
 
 const WorldMap = () => {
-  const mapCenter: LatLngExpression = [20, 0];
+  useEffect(() => {
+    console.log('WorldMap component mounted');
+  }, []);
 
   return (
     <div className="w-full h-screen relative">
-      <MapContainer
-        center={mapCenter}
-        zoom={2}
-        className="w-full h-full"
-        style={{ background: 'hsl(220, 25%, 8%)' }}
-      >
-        <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
-        <MapMarkers />
-      </MapContainer>
+      <div className="w-full h-full">
+        <MapContainer
+          center={[20, 0]}
+          zoom={2}
+          minZoom={2}
+          maxZoom={18}
+          scrollWheelZoom={true}
+          style={{ 
+            width: '100%',
+            height: '100vh',
+            background: 'hsl(220, 25%, 8%)',
+            zIndex: 0
+          }}
+        >
+          <LeafletIconFix />
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          />
+          <MapMarkers />
+        </MapContainer>
+      </div>
       
       {/* Header Overlay */}
-      <div className="absolute top-0 left-0 right-0 z-[1000] bg-gradient-to-b from-background/90 to-transparent p-6">
+      <div className="absolute top-0 left-0 right-0 z-[1000] bg-gradient-to-b from-background/90 to-transparent p-6 pointer-events-none">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl font-bold text-foreground mb-2 drop-shadow-lg">
             World Landmarks Explorer
